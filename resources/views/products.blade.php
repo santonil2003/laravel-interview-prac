@@ -25,8 +25,15 @@
         <ul>
             @foreach (\App\Models\Product::all() as $product)
             <li>
-                {{ $product->name }}
-                <form action="{{ route('products.delete', $product->id) }}" method="POST">
+                <span>
+                    {{ $product->name }}
+                </span>
+
+                <span style="margin-left: 10px">
+                     {{ $product->description }}
+                </span>
+
+                <form action="{{ route('products.delete', $product->id) }}" method="POST" style="margin-left: 10px;">
                     @csrf
                     @method('DELETE')
                     <button type="submit">delete</button>
