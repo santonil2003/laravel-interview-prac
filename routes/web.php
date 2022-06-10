@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::prefix('products')->group(function () {
+    Route::get('/', [ProductController::class, 'index'])->name('products.index');
+    Route::post('/new', [ProductController::class, 'new'])->name('products.new');
+    Route::delete('/delete', [ProductController::class, 'delete'])->name('products.delete');
+});
+
 Route::get('/', fn() => redirect('/products'));
-Route::get('/products', 'ProductController@index');
-Route::post('/products/new', 'ProductController@new');
-Route::post('/products/delete', 'ProductController@delete');
