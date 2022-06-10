@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\NewProductRequest;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,15 +21,24 @@ class ProductController extends Controller
      */
     public function new(NewProductRequest $request)
     {
-        DB::insert("INSERT INTO products (name) VALUES ('".$request->name."')");
+        Product::create($request->all());
 
-        return redirect('/products')->with('status', 'Product saved');
+        return redirect()
+            ->route('products.index')
+            ->with('status', 'Product saved');
     }
 
-    public function delete(Request $request)
+    /**
+     * delete a product
+     * @param Product $product
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete(Product $product)
     {
-        DB::delete("DELETE FROM products WHERE id = ".$request->id);
+        $product->delete();
 
-        return redirect('/products')->with('status', 'Product was deleted');
+        return redirect()
+            ->route('products.index')
+            ->with('status', 'Product was deleted');
     }
 }

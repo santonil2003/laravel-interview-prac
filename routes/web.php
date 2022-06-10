@@ -17,7 +17,7 @@ use App\Http\Controllers\ProductController;
 Route::prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('products.index');
     Route::post('/new', [ProductController::class, 'new'])->name('products.new');
-    Route::delete('/delete', [ProductController::class, 'delete'])->name('products.delete');
+    Route::delete('/delete/{product}', [ProductController::class, 'delete'])->name('products.delete');
 });
 
-Route::get('/', fn() => redirect('/products'));
+Route::get('/', fn() => redirect()->route('products.index'));
