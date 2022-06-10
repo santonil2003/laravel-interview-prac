@@ -21,9 +21,9 @@
 
         <h1>Current Products</h1>
 
-        @if (\App\Models\Product::all()->count())
+        @if ($products->count())
         <ul>
-            @foreach (\App\Models\Product::all() as $product)
+            @foreach ($products as $product)
             <li>
                 <span>
                     {{ $product->name }}
@@ -31,6 +31,10 @@
 
                 <span style="margin-left: 10px">
                      {{ $product->description }}
+                </span>
+
+                <span style="margin-left: 10px">
+                    {{ implode(', ', $product->tags()->pluck('name')->toArray())}}
                 </span>
 
                 <form action="{{ route('products.delete', $product->id) }}" method="POST" style="margin-left: 10px;">
@@ -47,19 +51,26 @@
 
 
 
-        @if (session('status'))
-        <div class="alert-success">
-            {{ session('status') }}
-        </div>
+        @if (session('error'))
+            <div class="alert-danger">
+                {{ session('error') }}
+            </div>
+            <hr />
         @endif
 
+        @if (session('status'))
+            <div class="alert-success">
+                {{ session('status') }}
+            </div>
         <hr />
+        @endif
 
         <!-- display errors-->
         @if($errors->any())
             {!! implode('', $errors->all('<div class="alert-danger">:message</div>')) !!}
+            <hr/>
         @endif
-        <hr/>
+
 
         <h2>New product</h2>
         <form action="{{ route('products.new') }}" method="POST">
