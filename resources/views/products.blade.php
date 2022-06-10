@@ -11,6 +11,10 @@
                 color: green;
             }
 
+            .alert-danger{
+                color: red;
+            }
+
         </style>
     </head>
     <body>
@@ -43,6 +47,12 @@
         @endif
 
         <hr />
+
+        <!-- display errors-->
+        @if($errors->any())
+            {!! implode('', $errors->all('<div class="alert-danger">:message</div>')) !!}
+        @endif
+        <hr/>
 
         <h2>New product</h2>
         <form action="/products/new" method="POST">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NewProductRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,7 +13,12 @@ class ProductController extends Controller
         return view('products');
     }
 
-    public function new(Request $request)
+    /**
+     * add new product
+     * @param NewProductRequest $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function new(NewProductRequest $request)
     {
         DB::insert("INSERT INTO products (name) VALUES ('".$request->name."')");
 
