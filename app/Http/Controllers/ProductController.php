@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\NewProductRequest;
 use App\Models\Product;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -35,7 +32,7 @@ class ProductController extends Controller
                 ->with('error', 'Product could not be saved.');
         }
 
-        // add tags to the proudcts
+        // add tags to the products
         $rawTagNames = explode(',', $request->tags ?? '');
         $newProduct->addTags($rawTagNames);
 
