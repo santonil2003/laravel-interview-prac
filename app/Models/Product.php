@@ -32,8 +32,11 @@ class Product extends Model
      */
     public function addTags(array $tagNames)
     {
+        // trim
+        $cleanTagNames = array_map(fn($item) => trim($item), $tagNames);
+
         // filter out empty tags
-        $validTagNames = array_filter($tagNames, fn($item) => !empty($item));
+        $validTagNames = array_filter($cleanTagNames, fn($item) => !empty($item));
 
         // extract unique tags
         $uniqueTagNames = array_unique($validTagNames);
@@ -42,7 +45,7 @@ class Product extends Model
         // fetch if exist else create the tag before attaching it to the product
         $tags = array_map(function ($tagName) {
             return Tag::firstOrCreate([
-                'name' => trim($tagName)
+                'name' => $tagName
             ]);
         }, $uniqueTagNames);
 
